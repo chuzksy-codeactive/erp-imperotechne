@@ -8,11 +8,11 @@ services:
     image: ${DOCKER_REGISTRY-}jpsageerpwebapi
     build:
       context: .
-      dockerfile: JPSAGE-ERP.WebAPI/Dockerfile
+      dockerfile: src/ERP/JPSAGE-ERP.WebAPI/Dockerfile
 
   cache.api:
     image: ${DOCKER_REGISTRY-}cacheapi
     build:
       context: .
-      dockerfile: Cache.API/Dockerfile
+      dockerfile: src/Cache/Cache.API/Dockerfile
 
