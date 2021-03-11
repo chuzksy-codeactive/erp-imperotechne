@@ -193,9 +193,14 @@ namespace Cache.API.Repositories
 
         public async Task<SuccessResponse<object>> DeleteMTO(string username)
         {
-            await _context
+            var result = await _context
                 .Redis
                 .KeyDeleteAsync(username);
+
+            if (!result)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, ResponseMessages.DeleteUnSuccessResponse);
+            }
 
             return new SuccessResponse<object>
             {

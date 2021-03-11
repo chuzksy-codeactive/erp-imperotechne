@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cache.API.Entities;
 using Cache.API.Model;
+using ERP.EventBus.Events;
 
 namespace Cache.API.Mapper
 {
@@ -10,6 +11,7 @@ namespace Cache.API.Mapper
         {
             CreateMap<MaterialTakeOffDto, MaterialTakeOff>().ReverseMap();
             CreateMap<MaterialTakeOffDetailDto, MaterialTakeOffDetail>().ReverseMap();
+            CreateMap<MaterialTakeOffDto, MaterialTakeOffEvent>().ReverseMap();
         }
     }
 }

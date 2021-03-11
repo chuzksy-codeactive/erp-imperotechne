@@ -13,7 +13,6 @@ namespace JPSAGE_ERP.Domain.Entities
         public int? SupplierId { get; set; }
 
         public virtual TblCity City { get; set; }
-        public virtual TblCountry Country { get; set; }
         public virtual TblSupplierIdentification Supplier { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace JPSAGE_ERP.Domain.Entities
             TblMainCustomersPerm = new HashSet<TblMainCustomersPerm>();
             TblMtoelectricalFormDetails = new HashSet<TblMtoelectricalFormDetails>();
             TblMtoelectricalFormDetailsTemp = new HashSet<TblMtoelectricalFormDetailsTemp>();
-            TblOfficeServiceCl = new HashSet<TblOfficeServiceCl>();
             TblOfficeServiceClperm = new HashSet<TblOfficeServiceClperm>();
             TblSrconstructionTechnicalQueries = new HashSet<TblSrconstructionTechnicalQueries>();
             TblSrconstructionTechnicalQueriesTemp = new HashSet<TblSrconstructionTechnicalQueriesTemp>();
@@ -36,7 +35,6 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblMainCustomersPerm> TblMainCustomersPerm { get; set; }
         public virtual ICollection<TblMtoelectricalFormDetails> TblMtoelectricalFormDetails { get; set; }
         public virtual ICollection<TblMtoelectricalFormDetailsTemp> TblMtoelectricalFormDetailsTemp { get; set; }
-        public virtual ICollection<TblOfficeServiceCl> TblOfficeServiceCl { get; set; }
         public virtual ICollection<TblOfficeServiceClperm> TblOfficeServiceClperm { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueries> TblSrconstructionTechnicalQueries { get; set; }
         public virtual ICollection<TblSrconstructionTechnicalQueriesTemp> TblSrconstructionTechnicalQueriesTemp { get; set; }

@@ -3,8 +3,12 @@ using Cache.API.Entities;
 using Cache.API.Helpers;
 using Cache.API.Model;
 using Cache.API.Repositories.Interface;
+using ERP.EventBus.Common;
+using ERP.EventBus.Events;
+using ERP.EventBus.Producer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,15 +21,17 @@ namespace Cache.API.Controllers
     {
         private readonly ILogger<MaterialTakeOffsController> _logger;
         private readonly IMtoRepository _mtoRepository;
+        private readonly MTOEventProducer _mtoProducer;
         private readonly IMapper _mapper;
 
-        public MaterialTakeOffsController(ILogger<MaterialTakeOffsController> logger, 
-            IMtoRepository mtoRepository, 
-            IMapper mapper)
+        public MaterialTakeOffsController(ILogger<MaterialTakeOffsController> logger,
+            IMtoRepository mtoRepository,
+            IMapper mapper, MTOEventProducer mtoProducer)
         {
             _logger = logger;
             _mtoRepository = mtoRepository;
             _mapper = mapper;
+            _mtoProducer = mtoProducer;
         }
 
         [HttpGet("[action]")]
@@ -117,6 +123,30 @@ namespace Cache.API.Controllers
             var result = await _mtoRepository.ClearMTODetails(username);
 
             return Ok(result);
+        }
+
+        [HttpPost("submit")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        public async Task<IActionResult> SubmitMtoForm(MaterialTakeOffDto materialTakeOffDto)
+        {
+            var mto = await _mtoRepository.GetMaterialTakeOffs(materialTakeOffDto.UserEmail);
+
+            await _mtoRepository.DeleteMTO(materialTakeOffDto.UserEmail);
+
+            var mtoMessage = _mapper.Map<MaterialTakeOffEvent>(mto.Data);
+            mtoMessage.RequestId = Guid.NewGuid();
+
+            try
+            {
+                _mtoProducer.PublishMTOEvent(EventBusConstants.MtoQueue, mtoMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", mtoMessage.RequestId, "MaterialTakeOff");
+                throw;
+            }
+
+            return Accepted();
         }
     }
 }

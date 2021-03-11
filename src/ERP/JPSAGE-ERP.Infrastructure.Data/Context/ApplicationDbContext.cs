@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using JPSAGE_ERP.Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JPSAGE_ERP.Domain
 {
@@ -817,13 +817,9 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
-                entity.Property(e => e.CityCode)
-                    .IsRequired()
-                    .HasMaxLength(10);
+                entity.Property(e => e.CityCode).HasMaxLength(10);
 
-                entity.Property(e => e.CityName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.CityName).HasMaxLength(100);
 
                 entity.Property(e => e.StateId).HasColumnName("StateID");
 
@@ -1116,13 +1112,9 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
-                entity.Property(e => e.CountryCode)
-                    .IsRequired()
-                    .HasMaxLength(10);
+                entity.Property(e => e.CountryCode).HasMaxLength(10);
 
-                entity.Property(e => e.CountryName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.CountryName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<TblCurrency>(entity =>
@@ -1936,11 +1928,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
 
-                entity.HasOne(d => d.ProductSuppliedNavigation)
-                    .WithMany(p => p.TblForeignCompany)
-                    .HasForeignKey(d => d.ProductSupplied)
-                    .HasConstraintName("FK_tbl_ForeignCompany_tbl_Products");
-
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.TblForeignCompany)
                     .HasForeignKey(d => d.SupplierId)
@@ -1959,11 +1946,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.CompanyName).HasMaxLength(200);
 
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
-
-                entity.HasOne(d => d.ProductSuppliedNavigation)
-                    .WithMany(p => p.TblForeignCompanyPerm)
-                    .HasForeignKey(d => d.ProductSupplied)
-                    .HasConstraintName("FK_tbl_ForeignCompanyPerm_tbl_Products");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.TblForeignCompanyPerm)
@@ -3615,11 +3597,6 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblOfficeServiceCl)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_tbl_OfficeServiceCL_tbl_City");
-
-                entity.HasOne(d => d.Country)
-                    .WithMany(p => p.TblOfficeServiceCl)
-                    .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK_tbl_OfficeServiceCL_tbl_Country");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.TblOfficeServiceCl)
@@ -5941,13 +5918,9 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
-                entity.Property(e => e.StateCode)
-                    .IsRequired()
-                    .HasMaxLength(10);
+                entity.Property(e => e.StateCode).HasMaxLength(10);
 
-                entity.Property(e => e.StateName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.StateName).HasMaxLength(100);
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.TblState)
@@ -6548,8 +6521,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.Property(e => e.SubConAddress).HasMaxLength(500);
 
                 entity.Property(e => e.SubConName).HasMaxLength(500);
@@ -6560,11 +6531,6 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblTypicalSubcontractedScope)
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_TypicalSubcontractedScope_tbl_Country");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.TblTypicalSubcontractedScope)
-                    .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK_tbl_TypicalSubcontractedScope_tbl_Products");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.TblTypicalSubcontractedScope)
@@ -6582,8 +6548,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CountryId).HasColumnName("CountryID");
 
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.Property(e => e.SubConAddress).HasMaxLength(500);
 
                 entity.Property(e => e.SubConName).HasMaxLength(500);
@@ -6594,11 +6558,6 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblTypicalSubcontractedScopePerm)
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_TypicalSubContractedScopePerm_tbl_Country");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.TblTypicalSubcontractedScopePerm)
-                    .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK_tbl_TypicalSubContractedScopePerm_tbl_Products");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.TblTypicalSubcontractedScopePerm)
