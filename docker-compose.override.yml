@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  cachedb:
+    container_name: cachedb
+    restart: always
+    ports:
+      - "6379:6379"
+
+  cache.api:
+    container_name: cacheapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Redis=cachedb:6379"
+    depends_on:
+      - cachedb
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    ports:
+      - "8001:80"     
+      
+  jpsage-erp.webapi:
+    container_name: jpsageerpwebapi
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
