@@ -12,6 +12,7 @@ namespace Cache.API.Mapper
             CreateMap<MaterialTakeOffDto, MaterialTakeOff>().ReverseMap();
             CreateMap<MaterialTakeOffDetailDto, MaterialTakeOffDetail>().ReverseMap();
             CreateMap<MaterialTakeOffDto, MaterialTakeOffEvent>().ReverseMap();
+            CreateMap<MaterialTakeOffDetailDto, MaterialTakeOffDetailEvent>().ReverseMap();
         }
     }
 }

@@ -5,6 +5,8 @@ using Cache.API.Model;
 using Cache.API.Repositories;
 using Cache.API.Repositories.Interface;
 using Cache.API.Validations;
+using ERP.EventBus;
+using ERP.EventBus.Producer;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -39,14 +42,15 @@ namespace Cache.API
 
             services.AddControllers();
 
-            // Redis Dependencies
+            #region Redis Dependencies
             services.AddSingleton<ConnectionMultiplexer>(sp =>
             {
                 var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
-            });
+            }); 
+            #endregion
 
-            // Project Dependencies
+            #region Project Dependencies
             services.AddTransient<ICacheContext, CacheContext>();
             services.AddTransient<IMtoRepository, MtoRepository>();
             services.AddAutoMapper(typeof(Startup));
@@ -57,6 +61,31 @@ namespace Cache.API
                 }).AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<MaterialTakeOffDtoValidator>());
             services.AddTransient<IValidator<MaterialTakeOffDto>, MaterialTakeOffDtoValidator>();
             services.AddTransient<IValidator<MaterialTakeOffDetailDto>, MaterialTakeOffDetailDtoValidator>();
+            #endregion
+
+            #region RabbitMQ Dependencies
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+                {
+                    var factory = new ConnectionFactory()
+                    {
+                        HostName = Configuration["EventBus:HostName"]
+                    };
+
+                    if (!string.IsNullOrEmpty(Configuration["EventBus:UserName"]))
+                    {
+                        factory.UserName = Configuration["EventBus:UserName"];
+                    }
+
+                    if (!string.IsNullOrEmpty(Configuration["EventBus:Password"]))
+                    {
+                        factory.Password = Configuration["EventBus:Password"];
+                    }
+
+                    return new RabbitMQConnection(factory);
+                });
+
+            services.AddSingleton<MTOEventProducer>(); 
+            #endregion
 
             services.AddSwaggerGen(c =>
             {

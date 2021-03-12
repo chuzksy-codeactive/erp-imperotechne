@@ -146,7 +146,12 @@ namespace Cache.API.Controllers
                 throw;
             }
 
-            return Accepted();
+            return Accepted(new SuccessResponse<object>
+            {
+                Success = true,
+                Message = ResponseMessages.SubmitSuccessResponse,
+                Data = new { }
+            });
         }
     }
 }

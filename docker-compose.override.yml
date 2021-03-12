@@ -7,13 +7,22 @@ services:
     ports:
       - "6379:6379"
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   cache.api:
     container_name: cacheapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:Redis=cachedb:6379"
+      - "EventBus:HostName=rabbitmq"
     depends_on:
       - cachedb
+      - rabbitmq
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -25,6 +34,9 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "EventBus:HostName=rabbitmq"
+    depends_on:
+      - rabbitmq  
     ports:
       - "8002:80"
     volumes:

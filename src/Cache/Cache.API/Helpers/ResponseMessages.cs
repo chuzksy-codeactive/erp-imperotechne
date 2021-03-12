@@ -10,5 +10,6 @@
         public const string UpdateSuccessResponse = "Data updated successfully";
         public const string DeleteSuccessResponse = "Data deleted successfully";
         public const string DeleteUnSuccessResponse = "Data failed to delete";
+        public const string SubmitSuccessResponse = "Data submitted successfully";
     }
 }
