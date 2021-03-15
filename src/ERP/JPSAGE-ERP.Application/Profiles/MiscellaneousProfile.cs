@@ -14,7 +14,10 @@ namespace JPSAGE_ERP.Application.Profiles
             CreateMap<TblStaffBioData, StaffDto>();
             CreateMap<TblSrconstructionTechnicalQueriesTemp, TSrconstructionTechnicalQueriesTempDto>();
             CreateMap<TblSupplierIdentification, SupplierDto>();
-            CreateMap<TblCompanyInfo, CompanyInfoDto>();
+            CreateMap<TblCompanyInfo, CompanyInfoDto>().ReverseMap();
+            CreateMap<TblClients, ClientDto>();
+            CreateMap<TblUnits, UnitDto>();
+            CreateMap<TblCurrency, CurrencyDto>();
         }
     }
 }

@@ -1,15 +1,14 @@
 using Hangfire;
 using JPSAGE_ERP.Infrastructure.IoC;
+using JPSAGE_ERP.WebAPI.Extension;
 using JPSAGE_ERP.WebAPI.Installers;
 using JPSAGE_ERP.WebAPI.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using JPSAGE_ERP.Application.Services;
 
 namespace JPSAGE_ERP.WebAPI
 {
@@ -30,7 +29,7 @@ namespace JPSAGE_ERP.WebAPI
                 options.AddPolicy("EnableCORS", builder =>
                 {
                     builder
-                        .WithOrigins("http://127.0.0.1:5500", Configuration["BASE_URL_TEST"], Configuration["BASE_URL"], Configuration["ERPURL"])
+                        .WithOrigins("http://127.0.0.1:5500")
                         .AllowAnyHeader()
                         .AllowCredentials()
                         .AllowAnyMethod();
@@ -69,12 +68,7 @@ namespace JPSAGE_ERP.WebAPI
             app.UseAuthorization();
             app.UseHangfireDashboard();
             app.UseHangfireServer();
-            
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
-
+            app.UseRabbitListener();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

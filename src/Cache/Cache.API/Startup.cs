@@ -11,19 +11,13 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cache.API
 {
@@ -60,7 +54,12 @@ namespace Cache.API
                     o.InvalidModelStateResponseFactory = context => new ValidationFailedResult(context.ModelState);
                 }).AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<MaterialTakeOffDtoValidator>());
             services.AddTransient<IValidator<MaterialTakeOffDto>, MaterialTakeOffDtoValidator>();
-            services.AddTransient<IValidator<MaterialTakeOffDetailDto>, MaterialTakeOffDetailDtoValidator>();
+            services.AddTransient<IValidator<MtoCivilDetailsDto>, MtoCivilDetailsDtoValidator>();
+            services.AddTransient<IValidator<MtoElectricalDetailsDto>, MtoElectricalDetailsDtoValidator>();
+            services.AddTransient<IValidator<MtoPipingDetailsDto>, MtoPipingDetailsDtoValidator>();
+            services.AddTransient<IValidator<MtoInstrumentDetailsDto>, MtoInstrumentDetailsDtoValidator>();
+            services.AddTransient<IValidator<MtoDisciplineDetailDto>, MtoDisciplineDetailDtoValidator>();
+            services.AddTransient<IValidator<MtoDisciplineDetailsDto>, MtoDisciplineDetailsDtoValidaor>();
             #endregion
 
             #region RabbitMQ Dependencies

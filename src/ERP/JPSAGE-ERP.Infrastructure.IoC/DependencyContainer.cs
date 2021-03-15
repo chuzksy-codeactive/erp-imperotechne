@@ -37,10 +37,12 @@ namespace JPSAGE_ERP.Infrastructure.IoC
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<ISiteReportRepository, SiteReportRepository>();
             services.AddScoped<IAuthListRepository, AuthListRepository>();
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IUploadFileToBlob, UploadFileToBlob>();
             services.AddScoped<IFileContentUploadService, FileContentUploadService>();
             services.AddScoped<IEmailTemplate, EmailTemplate>();
+            services.AddScoped(typeof(IMtoRepository), typeof(MtoRepository));
+            services.AddTransient<IMtoRepository, MtoRepository>();
         }
     }
 }

@@ -6,7 +6,6 @@ namespace JPSAGE_ERP.Domain.Entities
     public partial class TblMtoelectricalFormDetailsTemp
     {
         public int EleFormDetId { get; set; }
-        public int EleFormId { get; set; }
         public string ItemDescription { get; set; }
         public int? UnitId { get; set; }
         public int? QuantityRequired { get; set; }
@@ -24,10 +23,11 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? MtoformId { get; set; }
 
         public virtual TblCity City { get; set; }
         public virtual TblCountry Country { get; set; }
-        public virtual TblMtoelectricalFormTemp EleForm { get; set; }
+        public virtual TblMtoforms Mtoform { get; set; }
         public virtual TblState State { get; set; }
         public virtual TblUnits Unit { get; set; }
     }

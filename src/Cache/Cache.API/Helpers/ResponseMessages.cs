@@ -11,5 +11,9 @@
         public const string DeleteSuccessResponse = "Data deleted successfully";
         public const string DeleteUnSuccessResponse = "Data failed to delete";
         public const string SubmitSuccessResponse = "Data submitted successfully";
+        public const string InvalidUsername = "Username is invalid";
+        public const string DisciplineNotDefined = "Discipline Id is not defined";
+        public const string ItemNotFound = "Mto Item is not found";
+        public const string RemoveSuccessResponse = "Mto Item removed successfully";
     }
 }

@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ERP.EventBus.Events
+namespace JPSAGE_ERP.Application.Models
 {
-    public class MaterialTakeOffEvent
+    public class MtoDto
     {
-        public MaterialTakeOffEvent()
+        public MtoDto()
         {
-            MtoCivilDetailsEvents = new HashSet<MtoCivilDetailsEvent>();
-            MtoInstrumentDetailsEvents = new HashSet<MtoInstrumentDetailsEvent>();
-            MtoPipingDetailsEvents = new HashSet<MtoPipingDetailsEvent>();
-            MtoElectricalDetailsEvents = new HashSet<MtoElectricalDetailsEvent>();
+            MtoElectricalDetails = new HashSet<MtoElectricalDetailsDto>();
+            MtoPipingDetails = new HashSet<MtoPipingDetailsDto>();
+            MtoInstrumentDetails = new HashSet<MtoInstrumentDetailsDto>();
+            MtoCivilDetails = new HashSet<MtoCivilDetailsDto>();
         }
 
-        public Guid RequestId { get; set; }
-        public string UserEmail { get; set; }
         public int ProjectId { get; set; }
+        public int MtodisciplineId { get; set; }
         public int DisciplineId { get; set; }
         public int SubDisciplineId { get; set; }
-        public string DocumentNumber { get; set; }
         public string Title { get; set; }
         public DateTime? ValidityPeriod { get; set; }
-        public int ValidityStatus { get; set; }
-        public int CompanyId { get; set; }
-        public int ClientId { get; set; }
+        public int? ValidityStatus { get; set; }
+        public int? CompanyId { get; set; }
+        public int? ClientId { get; set; }
         public string CreatedBy { get; set; }
-        public ICollection<MtoCivilDetailsEvent> MtoCivilDetailsEvents { get; set; }
-        public ICollection<MtoElectricalDetailsEvent> MtoElectricalDetailsEvents { get; set; }
-        public ICollection<MtoPipingDetailsEvent> MtoPipingDetailsEvents { get; set; }
-        public ICollection<MtoInstrumentDetailsEvent> MtoInstrumentDetailsEvents { get; set; }
+        public ICollection<MtoElectricalDetailsDto> MtoElectricalDetails { get; set; }
+        public ICollection<MtoPipingDetailsDto> MtoPipingDetails { get; set; }
+        public ICollection<MtoInstrumentDetailsDto> MtoInstrumentDetails { get; set; }
+        public ICollection<MtoCivilDetailsDto> MtoCivilDetails { get; set; }
     }
 
-    public class MtoElectricalDetailsEvent
+    public class MtoElectricalDetailsDto
     {
         public string ItemDescription { get; set; }
         public int? UnitId { get; set; }
@@ -48,7 +46,7 @@ namespace ERP.EventBus.Events
         public string Remarks { get; set; }
     }
 
-    public class MtoPipingDetailsEvent
+    public class MtoPipingDetailsDto
     {
         public string Item { get; set; }
         public int? Size { get; set; }
@@ -63,7 +61,7 @@ namespace ERP.EventBus.Events
         public decimal? TotalPrice { get; set; }
     }
 
-    public class MtoInstrumentDetailsEvent
+    public class MtoInstrumentDetailsDto
     {
         public string ItemDescription { get; set; }
         public int? MaterialId { get; set; }
@@ -79,7 +77,7 @@ namespace ERP.EventBus.Events
         public string Remarks { get; set; }
     }
 
-    public class MtoCivilDetailsEvent
+    public class MtoCivilDetailsDto
     {
         public string Description { get; set; }
         public int? Quantity { get; set; }
@@ -88,5 +86,26 @@ namespace ERP.EventBus.Events
         public decimal? Amount { get; set; }
         public decimal? Subtotal { get; set; }
         public decimal? Total { get; set; }
+    }
+
+    public class MtoDisciplineDto
+    {
+        public int DisciplineId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class MtoSubdisciplineDto
+    {
+        public int SubDisciplineId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class MtoViewModelDto
+    {
+        public string ProjectName { get; set; }
+        public string ProjectNumber { get; set; }
+        public string FormType { get; set; }
+        public int NoOfItems { get; set; }
+        public string Status { get; set; }
     }
 }

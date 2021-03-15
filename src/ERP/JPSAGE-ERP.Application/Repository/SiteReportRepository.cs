@@ -1,4 +1,5 @@
-﻿using JPSAGE_ERP.Application.Enums;
+﻿using AutoMapper;
+using JPSAGE_ERP.Application.Enums;
 using JPSAGE_ERP.Application.Helpers;
 using JPSAGE_ERP.Application.Interfaces;
 using JPSAGE_ERP.Application.Models.Miscellaneous;
@@ -15,10 +16,11 @@ namespace JPSAGE_ERP.Application.Repository
 {
     public class SiteReportRepository : Repository<TblStaffBioData>, ISiteReportRepository
     {
-        public SiteReportRepository(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public SiteReportRepository(ApplicationDbContext context, IMapper mapper)
             : base(context)
         {
-
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<TSrconstructionTechnicalQueriesTempDto>> GetAllSRCTQRepliesForAttentee(int attendeeId)
@@ -96,15 +98,26 @@ namespace JPSAGE_ERP.Application.Repository
             return (checker.OfficeEmailAddress, approver.OfficeEmailAddress);
         }
 
-        public async Task<IEnumerable<CompanyInfoDto>> GetAllCompanyInfo()
+        public async Task<IEnumerable<CompanyInfoDto>> GetAllCompanyInfo(string search)
         {
-            var query = await _context.TblCompanyInfo.Select(x => new CompanyInfoDto
+            var query = _context.TblCompanyInfo as IQueryable<TblCompanyInfo>;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.CompanyName.ToLower().Contains(search.ToUpper()));
+            }
+
+            query = query.Select(x => new TblCompanyInfo
             {
                 CompanyId = x.CompanyId,
                 CompanyName = x.CompanyName
-            }).ToListAsync();
+            });
 
-            return query;
+            var result = await query.ToListAsync();
+
+            var dto = _mapper.Map<IEnumerable<CompanyInfoDto>>(result);
+
+            return dto;
         }
 
         /// <summary>

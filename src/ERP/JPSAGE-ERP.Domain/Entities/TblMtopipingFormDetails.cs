@@ -6,7 +6,6 @@ namespace JPSAGE_ERP.Domain.Entities
     public partial class TblMtopipingFormDetails
     {
         public int PipFormDetId { get; set; }
-        public int PipFormId { get; set; }
         public string Item { get; set; }
         public int? Size { get; set; }
         public string Schedule { get; set; }
@@ -22,8 +21,9 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? MtoformId { get; set; }
 
-        public virtual TblMtopipingForm PipForm { get; set; }
+        public virtual TblMtoforms Mtoform { get; set; }
         public virtual TblUnits Unit { get; set; }
     }
 }

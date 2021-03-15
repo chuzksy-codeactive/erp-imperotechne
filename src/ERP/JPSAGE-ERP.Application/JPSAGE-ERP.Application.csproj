@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>JPSAGE_ERP.Application</RootNamespace>
   </PropertyGroup>
 
@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EventBus\ERP.EventBus\ERP.EventBus.csproj" />
     <ProjectReference Include="..\JPSAGE-ERP.Infrastructure.Data\JPSAGE-ERP.Infrastructure.Data.csproj" />
   </ItemGroup>
 

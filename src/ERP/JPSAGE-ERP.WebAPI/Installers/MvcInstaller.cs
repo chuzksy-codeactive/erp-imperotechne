@@ -1,5 +1,7 @@
-﻿using JPSAGE_ERP.Domain;
+﻿using ERP.EventBus;
+using JPSAGE_ERP.Domain;
 using JPSAGE_ERP.Domain.Entities;
+using JPSAGE_ERP.WebAPI.RabbitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +24,30 @@ namespace JPSAGE_ERP.WebAPI.Installers
     {
         public void InstallerServices(IServiceCollection services, IConfiguration configuration)
         {
+            #region RabbitMQ Dependencies
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+            {
+                var factory = new ConnectionFactory()
+                {
+                    HostName = configuration["EventBus:HostName"]
+                };
+
+                if (!string.IsNullOrEmpty(configuration["EventBus:UserName"]))
+                {
+                    factory.UserName = configuration["EventBus:UserName"];
+                }
+
+                if (!string.IsNullOrEmpty(configuration["EventBus:Password"]))
+                {
+                    factory.Password = configuration["EventBus:Password"];
+                }
+
+                return new RabbitMQConnection(factory);
+            });
+
+            services.AddSingleton<MTOEventConsumer>();
+            #endregion
+
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 // to enable patch requests
@@ -105,8 +132,7 @@ namespace JPSAGE_ERP.WebAPI.Installers
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
-                            In = ParameterLocation.Header,
-
+                            In = ParameterLocation.Header
                         },
                         new List<string>()
                     }

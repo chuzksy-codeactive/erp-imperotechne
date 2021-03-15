@@ -10,14 +10,8 @@ namespace JPSAGE_ERP.Domain.Entities
             TblEndUserRequisitionProducts = new HashSet<TblEndUserRequisitionProducts>();
             TblEndUserRequisitionServices = new HashSet<TblEndUserRequisitionServices>();
             TblInvoice = new HashSet<TblInvoice>();
-            TblMtocivilForm = new HashSet<TblMtocivilForm>();
-            TblMtocivilFormTemp = new HashSet<TblMtocivilFormTemp>();
-            TblMtoelectricalForm = new HashSet<TblMtoelectricalForm>();
-            TblMtoelectricalFormTemp = new HashSet<TblMtoelectricalFormTemp>();
-            TblMtoinstrumentForm = new HashSet<TblMtoinstrumentForm>();
-            TblMtoinstrumentFormTemp = new HashSet<TblMtoinstrumentFormTemp>();
-            TblMtopipingForm = new HashSet<TblMtopipingForm>();
-            TblMtopipingFormTemp = new HashSet<TblMtopipingFormTemp>();
+            TblMtoforms = new HashSet<TblMtoforms>();
+            TblMtoformsTemp = new HashSet<TblMtoformsTemp>();
             TblQuotationMaster = new HashSet<TblQuotationMaster>();
         }
 
@@ -38,14 +32,8 @@ namespace JPSAGE_ERP.Domain.Entities
         public virtual ICollection<TblEndUserRequisitionProducts> TblEndUserRequisitionProducts { get; set; }
         public virtual ICollection<TblEndUserRequisitionServices> TblEndUserRequisitionServices { get; set; }
         public virtual ICollection<TblInvoice> TblInvoice { get; set; }
-        public virtual ICollection<TblMtocivilForm> TblMtocivilForm { get; set; }
-        public virtual ICollection<TblMtocivilFormTemp> TblMtocivilFormTemp { get; set; }
-        public virtual ICollection<TblMtoelectricalForm> TblMtoelectricalForm { get; set; }
-        public virtual ICollection<TblMtoelectricalFormTemp> TblMtoelectricalFormTemp { get; set; }
-        public virtual ICollection<TblMtoinstrumentForm> TblMtoinstrumentForm { get; set; }
-        public virtual ICollection<TblMtoinstrumentFormTemp> TblMtoinstrumentFormTemp { get; set; }
-        public virtual ICollection<TblMtopipingForm> TblMtopipingForm { get; set; }
-        public virtual ICollection<TblMtopipingFormTemp> TblMtopipingFormTemp { get; set; }
+        public virtual ICollection<TblMtoforms> TblMtoforms { get; set; }
+        public virtual ICollection<TblMtoformsTemp> TblMtoformsTemp { get; set; }
         public virtual ICollection<TblQuotationMaster> TblQuotationMaster { get; set; }
     }
 }

@@ -42,4 +42,22 @@
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
     }
+
+    public class ClientDto
+    {
+        public int ClientId { get; set; }
+        public string ClientName { get; set; }
+    }
+
+    public class UnitDto
+    {
+        public int UnitId { get; set; }
+        public string UnitName { get; set; }
+    }
+
+    public class CurrencyDto
+    {
+        public int CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+    }
 }

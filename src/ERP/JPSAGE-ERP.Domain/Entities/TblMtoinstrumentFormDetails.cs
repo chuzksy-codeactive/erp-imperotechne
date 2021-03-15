@@ -6,7 +6,6 @@ namespace JPSAGE_ERP.Domain.Entities
     public partial class TblMtoinstrumentFormDetails
     {
         public int InsFormDetId { get; set; }
-        public int InsFormId { get; set; }
         public string ItemDescription { get; set; }
         public int? MaterialId { get; set; }
         public int? Quantity { get; set; }
@@ -23,10 +22,11 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? MtoformId { get; set; }
 
-        public virtual TblMtoinstrumentForm InsForm { get; set; }
         public virtual TblManufacturers Manufacturer { get; set; }
         public virtual TblMaterials Material { get; set; }
+        public virtual TblMtoforms Mtoform { get; set; }
         public virtual TblUnits Unit { get; set; }
     }
 }

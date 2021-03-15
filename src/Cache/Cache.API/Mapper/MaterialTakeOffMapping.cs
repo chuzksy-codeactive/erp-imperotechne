@@ -10,9 +10,19 @@ namespace Cache.API.Mapper
         public MaterialTakeOffMapping()
         {
             CreateMap<MaterialTakeOffDto, MaterialTakeOff>().ReverseMap();
-            CreateMap<MaterialTakeOffDetailDto, MaterialTakeOffDetail>().ReverseMap();
             CreateMap<MaterialTakeOffDto, MaterialTakeOffEvent>().ReverseMap();
-            CreateMap<MaterialTakeOffDetailDto, MaterialTakeOffDetailEvent>().ReverseMap();
+
+            // Mapping the MTO details DTOs to their respective entities
+            CreateMap<MtoElectricalDetailsDto, MtoElectricalDetails>().ReverseMap();
+            CreateMap<MtoPipingDetailsDto, MtoPipingDetails>().ReverseMap();
+            CreateMap<MtoInstrumentDetailsDto, MtoInstrumentDetails>().ReverseMap();
+            CreateMap<MtoCivilDetailsDto, MtoCivilDetails>().ReverseMap();
+
+            // Mapping the MTO details DTOs to their respective event models
+            CreateMap<MtoCivilDetailsDto, MtoCivilDetailsEvent>().ReverseMap();
+            CreateMap<MtoElectricalDetailsDto, MtoElectricalDetailsEvent>().ReverseMap();
+            CreateMap<MtoPipingDetailsDto, MtoPipingDetailsEvent>().ReverseMap();
+            CreateMap<MtoInstrumentDetailsDto, MtoInstrumentDetailsEvent>().ReverseMap();
         }
     }
 }

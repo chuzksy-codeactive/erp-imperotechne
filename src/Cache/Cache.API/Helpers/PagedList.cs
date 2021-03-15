@@ -1,11 +1,8 @@
-﻿using JPSAGE_ERP.Application.Enums;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace JPSAGE_ERP.Application.Helpers
+namespace Cache.API.Helpers
 {
     public class PagedList<T> : List<T>
     {
@@ -26,7 +23,7 @@ namespace JPSAGE_ERP.Application.Helpers
             AddRange(items);
         }
 
-        public static async Task<PagedList<T>> Create(IQueryable<T> source, int pageNumber, int pageSize)
+        public static PagedList<T> Create(IEnumerable<T> source, int pageNumber, int pageSize)
         {
             var count = source.Count();
 
@@ -35,7 +32,7 @@ namespace JPSAGE_ERP.Application.Helpers
                 pageSize = count;
             }
 
-            var items = await source.Skip(((pageNumber - 1) * pageSize)).Take(pageSize).ToListAsync();
+            var items = source.Skip(((pageNumber - 1) * pageSize)).Take(pageSize).ToList();
 
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }
@@ -52,26 +49,5 @@ namespace JPSAGE_ERP.Application.Helpers
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-    }
-
-    public class AuthListParameters : ResourceParameters
-    {
-        public string Search { get; set; }
-    }
-
-    public class CtqParameters : ResourceParameters
-    {
-        public string Search { get; set; }
-        public int? CompanyId { get; set; }
-    }
-
-    public class MtoParameters : ResourceParameters
-    {
-        public string Search { get; set; }
-        public int? DisciplineId { get; set; }
-        public bool ThisWeek { get; set; }
-        public bool ThisMonth { get; set; }
-        public bool LastMonth { get; set; }
-        public bool ThisYear { get; set; }
     }
 }

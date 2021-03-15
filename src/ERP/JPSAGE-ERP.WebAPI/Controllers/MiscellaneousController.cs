@@ -25,7 +25,7 @@ namespace JPSAGE_ERP.WebAPI.Controllers
     /// </summary>
     /// [Route("api/v1/sitereports")]
     [Route("api/v1/miscellaneous")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class MiscellaneousController : ControllerBase
     {
@@ -113,11 +113,20 @@ namespace JPSAGE_ERP.WebAPI.Controllers
 
         [HttpGet("GetAllProjects")]
         [ProducesResponseType(typeof(SucessResponse<IEnumerable<ProjectsDto>>), 200)]
-        public async Task<IActionResult> GetProjects()
+        public async Task<IActionResult> GetProjects([FromQuery] string search)
         {
             try
             {
-                var projects = await _tblProjects.GetAllAsync();
+                var projects = new List<TblProjects>();
+
+                if (!string.IsNullOrEmpty(search.Trim()))
+                {
+                    projects = await _context.TblProjects.Where(x => x.ProjectName.ToLower().Contains(search.Trim().ToLower())).ToListAsync();
+                }
+                else
+                {
+                    projects = await _context.TblProjects.ToListAsync();
+                }
 
                 var projectsDto = _mapper.Map<IEnumerable<ProjectsDto>>(projects);
 
@@ -126,6 +135,102 @@ namespace JPSAGE_ERP.WebAPI.Controllers
                     success = true,
                     message = "Projects retrieved successfully",
                     data = projectsDto
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, Response<string>.InternalError(ex.Message));
+            }
+        }
+
+        [HttpGet("GetAllClients")]
+        [ProducesResponseType(typeof(SucessResponse<IEnumerable<ClientDto>>), 200)]
+        public async Task<IActionResult> GetClients([FromQuery] string search)
+        {
+            try
+            {
+                var clients = new List<TblClients>();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    clients = await _context.TblClients.Where(x => x.ClientName.ToLower().Contains(search.ToLower())).ToListAsync();
+                }
+                else
+                {
+                    clients = await _context.TblClients.ToListAsync();
+                }
+
+                var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clients);
+
+                return Ok(new SucessResponse<IEnumerable<ClientDto>>
+                {
+                    success = true,
+                    message = "Clients retrieved successfully",
+                    data = clientsDto
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, Response<string>.InternalError(ex.Message));
+            }
+        }
+
+        [HttpGet("GetAllUnits")]
+        [ProducesResponseType(typeof(SucessResponse<IEnumerable<UnitDto>>), 200)]
+        public async Task<IActionResult> GetUnits([FromQuery] string search)
+        {
+            try
+            {
+                var units = new List<TblUnits>();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    units = await _context.TblUnits.Where(x => x.UnitName.ToLower().Contains(search.ToLower())).ToListAsync();
+                }
+                else
+                {
+                    units = await _context.TblUnits.ToListAsync();
+                }
+
+                var unitsDto = _mapper.Map<IEnumerable<UnitDto>>(units);
+
+                return Ok(new SucessResponse<IEnumerable<UnitDto>>
+                {
+                    success = true,
+                    message = "Units retrieved successfully",
+                    data = unitsDto
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, Response<string>.InternalError(ex.Message));
+            }
+        }
+
+        [HttpGet("GetAllCurrencys")]
+        [ProducesResponseType(typeof(SucessResponse<IEnumerable<CurrencyDto>>), 200)]
+        public async Task<IActionResult> GetCurrencys([FromQuery] string search)
+        {
+            try
+            {
+                var currency = new List<TblCurrency>();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    currency = await _context.TblCurrency.Where(x => x.CurrencyName.ToLower().Contains(search.ToLower())).ToListAsync();
+                }
+                else
+                {
+                    currency = await _context.TblCurrency.ToListAsync();
+                }
+
+                var currencysDto = _mapper.Map<IEnumerable<CurrencyDto>>(currency);
+
+                return Ok(new SucessResponse<IEnumerable<CurrencyDto>>
+                {
+                    success = true,
+                    message = "Currency retrieved successfully",
+                    data = currencysDto
                 });
             }
             catch (Exception ex)
@@ -253,9 +358,9 @@ namespace JPSAGE_ERP.WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllCompanyQueries")]
-        public async Task<IActionResult> GetAllCompanyQueries()
+        public async Task<IActionResult> GetAllCompanies([FromQuery] string search)
         {
-            var result = await _siteReportRepository.GetAllCompanyInfo();
+            var result = await _siteReportRepository.GetAllCompanyInfo(search);
 
             return Ok(new SucessResponse<IEnumerable<CompanyInfoDto>>
             {

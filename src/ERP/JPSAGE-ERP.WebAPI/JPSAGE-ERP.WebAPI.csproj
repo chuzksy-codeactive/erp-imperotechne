@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>JPSAGE_ERP.WebAPI</RootNamespace>
     <UserSecretsId>e7ac5b7b-448d-4834-8028-ed44c33c316d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EventBus\ERP.EventBus\ERP.EventBus.csproj" />
     <ProjectReference Include="..\JPSAGE-ERP.Application\JPSAGE-ERP.Application.csproj" />
     <ProjectReference Include="..\JPSAGE-ERP.Infrastructure.Data\JPSAGE-ERP.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\JPSAGE-ERP.Infrastructure.IoC\JPSAGE-ERP.Infrastructure.IoC.csproj" />

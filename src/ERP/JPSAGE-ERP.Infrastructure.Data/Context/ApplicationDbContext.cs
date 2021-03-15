@@ -19,13 +19,6 @@ namespace JPSAGE_ERP.Domain
         }
 
         public virtual DbSet<AggregatedCounter> AggregatedCounter { get; set; }
-        //public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        //public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        //public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        //public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        //public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        //public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        //public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<BackgroundExecutor> BackgroundExecutor { get; set; }
         public virtual DbSet<BackgroundExecutorTrack> BackgroundExecutorTrack { get; set; }
         public virtual DbSet<BackgroundExecutorTrackingHistory> BackgroundExecutorTrackingHistory { get; set; }
@@ -106,23 +99,17 @@ namespace JPSAGE_ERP.Domain
         public virtual DbSet<TblMainCustomersPerm> TblMainCustomersPerm { get; set; }
         public virtual DbSet<TblManufacturers> TblManufacturers { get; set; }
         public virtual DbSet<TblMaterials> TblMaterials { get; set; }
-        public virtual DbSet<TblMtocivilForm> TblMtocivilForm { get; set; }
         public virtual DbSet<TblMtocivilFormDetails> TblMtocivilFormDetails { get; set; }
         public virtual DbSet<TblMtocivilFormDetailsTemp> TblMtocivilFormDetailsTemp { get; set; }
-        public virtual DbSet<TblMtocivilFormTemp> TblMtocivilFormTemp { get; set; }
         public virtual DbSet<TblMtodiscipline> TblMtodiscipline { get; set; }
-        public virtual DbSet<TblMtoelectricalForm> TblMtoelectricalForm { get; set; }
         public virtual DbSet<TblMtoelectricalFormDetails> TblMtoelectricalFormDetails { get; set; }
         public virtual DbSet<TblMtoelectricalFormDetailsTemp> TblMtoelectricalFormDetailsTemp { get; set; }
-        public virtual DbSet<TblMtoelectricalFormTemp> TblMtoelectricalFormTemp { get; set; }
-        public virtual DbSet<TblMtoinstrumentForm> TblMtoinstrumentForm { get; set; }
+        public virtual DbSet<TblMtoforms> TblMtoforms { get; set; }
+        public virtual DbSet<TblMtoformsTemp> TblMtoformsTemp { get; set; }
         public virtual DbSet<TblMtoinstrumentFormDetails> TblMtoinstrumentFormDetails { get; set; }
         public virtual DbSet<TblMtoinstrumentFormDetailsTemp> TblMtoinstrumentFormDetailsTemp { get; set; }
-        public virtual DbSet<TblMtoinstrumentFormTemp> TblMtoinstrumentFormTemp { get; set; }
-        public virtual DbSet<TblMtopipingForm> TblMtopipingForm { get; set; }
         public virtual DbSet<TblMtopipingFormDetails> TblMtopipingFormDetails { get; set; }
         public virtual DbSet<TblMtopipingFormDetailsTemp> TblMtopipingFormDetailsTemp { get; set; }
-        public virtual DbSet<TblMtopipingFormTemp> TblMtopipingFormTemp { get; set; }
         public virtual DbSet<TblMtosubDiscipline> TblMtosubDiscipline { get; set; }
         public virtual DbSet<TblNotificationGroup> TblNotificationGroup { get; set; }
         public virtual DbSet<TblNumberOfEmployees> TblNumberOfEmployees { get; set; }
@@ -2555,67 +2542,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.MaterialName).HasMaxLength(100);
             });
 
-            modelBuilder.Entity<TblMtocivilForm>(entity =>
-            {
-                entity.HasKey(e => e.CivFormId);
-
-                entity.ToTable("tbl_MTOCivilForm");
-
-                entity.Property(e => e.CivFormId).HasColumnName("CivFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtocivilForm)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOCivilForm_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtocivilForm)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOCivilForm_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtocivilForm)
-                    .HasForeignKey(d => d.MtodisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilForm_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtocivilForm)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilForm_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtocivilForm)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilForm_tbl_Projects");
-            });
-
             modelBuilder.Entity<TblMtocivilFormDetails>(entity =>
             {
                 entity.HasKey(e => e.CivFormDetId);
@@ -2625,8 +2551,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.CivFormDetId).HasColumnName("CivFormDetID");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
-
-                entity.Property(e => e.CivFormId).HasColumnName("CivFormID");
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
@@ -2638,6 +2562,8 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
+
                 entity.Property(e => e.Rate).HasColumnType("money");
 
                 entity.Property(e => e.Subtotal).HasColumnType("money");
@@ -2646,11 +2572,10 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
 
-                entity.HasOne(d => d.CivForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany(p => p.TblMtocivilFormDetails)
-                    .HasForeignKey(d => d.CivFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilFormDetails_tbl_MTOCivilForm");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOCivilFormDetails_tbl_MTOForms");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.TblMtocivilFormDetails)
@@ -2668,8 +2593,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.Amount).HasColumnType("money");
 
-                entity.Property(e => e.CivFormId).HasColumnName("CivFormID");
-
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -2680,6 +2603,8 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
+
                 entity.Property(e => e.Rate).HasColumnType("money");
 
                 entity.Property(e => e.Subtotal).HasColumnType("money");
@@ -2688,77 +2613,15 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
 
-                entity.HasOne(d => d.CivForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany(p => p.TblMtocivilFormDetailsTemp)
-                    .HasForeignKey(d => d.CivFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilFormDetailsTemp_tbl_MTOCivilFormTemp");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOCivilFormDetailsTemp_tbl_MTOForms");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.TblMtocivilFormDetailsTemp)
                     .HasForeignKey(d => d.UnitId)
                     .HasConstraintName("FK_tbl_MTOCivilFormDetailsTemp_tbl_Units");
-            });
-
-            modelBuilder.Entity<TblMtocivilFormTemp>(entity =>
-            {
-                entity.HasKey(e => e.CivFormId);
-
-                entity.ToTable("tbl_MTOCivilFormTemp");
-
-                entity.Property(e => e.CivFormId).HasColumnName("CivFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtocivilFormTemp)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOCivilFormTemp_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtocivilFormTemp)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOCivilFormTemp_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtocivilFormTemp)
-                    .HasForeignKey(d => d.MtodisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilFormTemp_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtocivilFormTemp)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilFormTemp_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtocivilFormTemp)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOCivilFormTemp_tbl_Projects");
             });
 
             modelBuilder.Entity<TblMtodiscipline>(entity =>
@@ -2778,67 +2641,6 @@ namespace JPSAGE_ERP.Domain
                     .HasMaxLength(100);
             });
 
-            modelBuilder.Entity<TblMtoelectricalForm>(entity =>
-            {
-                entity.HasKey(e => e.EleFormId);
-
-                entity.ToTable("tbl_MTOElectricalForm");
-
-                entity.Property(e => e.EleFormId).HasColumnName("EleFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtoelectricalForm)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOElectricalForm_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtoelectricalForm)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOElectricalForm_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtoelectricalForm)
-                    .HasForeignKey(d => d.MtodisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalForm_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtoelectricalForm)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalForm_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtoelectricalForm)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalForm_tbl_Projects");
-            });
-
             modelBuilder.Entity<TblMtoelectricalFormDetails>(entity =>
             {
                 entity.HasKey(e => e.EleFormDetId);
@@ -2855,8 +2657,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.EleFormId).HasColumnName("EleFormID");
-
                 entity.Property(e => e.GlandSize).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.ItemDescription).HasMaxLength(1000);
@@ -2864,6 +2664,8 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
                 entity.Property(e => e.Remarks).HasMaxLength(1000);
 
@@ -2889,11 +2691,10 @@ namespace JPSAGE_ERP.Domain
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_MTOElectricalFormDetails_tbl_Country");
 
-                entity.HasOne(d => d.EleForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany(p => p.TblMtoelectricalFormDetails)
-                    .HasForeignKey(d => d.EleFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormDetails_tbl_MTOElectricalForm");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOElectricalFormDetails_tbl_MTOForms");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.TblMtoelectricalFormDetails)
@@ -2922,8 +2723,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.EleFormId).HasColumnName("EleFormID");
-
                 entity.Property(e => e.GlandSize).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.ItemDescription).HasMaxLength(1000);
@@ -2931,6 +2730,8 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
                 entity.Property(e => e.Remarks).HasMaxLength(1000);
 
@@ -2956,11 +2757,10 @@ namespace JPSAGE_ERP.Domain
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_tbl_MTOElectricalFormDetailsTemp_tbl_Country");
 
-                entity.HasOne(d => d.EleForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany(p => p.TblMtoelectricalFormDetailsTemp)
-                    .HasForeignKey(d => d.EleFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormDetailsTemp_tbl_MTOElectricalFormTemp");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOElectricalFormDetailsTemp_tbl_MTOForms");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.TblMtoelectricalFormDetailsTemp)
@@ -2973,13 +2773,13 @@ namespace JPSAGE_ERP.Domain
                     .HasConstraintName("FK_tbl_MTOElectricalFormDetailsTemp_tbl_Units");
             });
 
-            modelBuilder.Entity<TblMtoelectricalFormTemp>(entity =>
+            modelBuilder.Entity<TblMtoforms>(entity =>
             {
-                entity.HasKey(e => e.EleFormId);
+                entity.HasKey(e => e.MtoformId);
 
-                entity.ToTable("tbl_MTOElectricalFormTemp");
+                entity.ToTable("tbl_MTOForms");
 
-                entity.Property(e => e.EleFormId).HasColumnName("EleFormID");
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
                 entity.Property(e => e.ClientId).HasColumnName("ClientID");
 
@@ -2987,60 +2787,56 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.DisciplineId).HasColumnName("DisciplineID");
 
                 entity.Property(e => e.DocumentNumber).HasMaxLength(100);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
                 entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
-                entity.Property(e => e.Title).HasMaxLength(200);
+                entity.Property(e => e.SubDisciplineId).HasColumnName("SubDisciplineID");
 
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtoelectricalFormTemp)
+                    .WithMany(p => p.TblMtoforms)
                     .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormTemp_tbl_Clients");
+                    .HasConstraintName("FK_tbl_MTOForms_tbl_Clients");
 
                 entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtoelectricalFormTemp)
+                    .WithMany(p => p.TblMtoforms)
                     .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormTemp_tbl_CompanyInfo");
+                    .HasConstraintName("FK_tbl_MTOForms_tbl_CompanyInfo");
 
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtoelectricalFormTemp)
-                    .HasForeignKey(d => d.MtodisciplineId)
+                entity.HasOne(d => d.Discipline)
+                    .WithMany(p => p.TblMtoforms)
+                    .HasForeignKey(d => d.DisciplineId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormTemp_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtoelectricalFormTemp)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormTemp_tbl_MTOSubDiscipline");
+                    .HasConstraintName("FK_tbl_MTOForms_tbl_MTODiscipline");
 
                 entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtoelectricalFormTemp)
+                    .WithMany(p => p.TblMtoforms)
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOElectricalFormTemp_tbl_Projects");
+                    .HasConstraintName("FK_tbl_MTOForms_tbl_Projects");
+
+                entity.HasOne(d => d.SubDiscipline)
+                    .WithMany(p => p.TblMtoforms)
+                    .HasForeignKey(d => d.SubDisciplineId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_MTOForms_tbl_MTOSubDiscipline");
             });
 
-            modelBuilder.Entity<TblMtoinstrumentForm>(entity =>
+            modelBuilder.Entity<TblMtoformsTemp>(entity =>
             {
-                entity.HasKey(e => e.InsFormId);
+                entity.HasKey(e => e.MtoformId);
 
-                entity.ToTable("tbl_MTOInstrumentForm");
+                entity.ToTable("tbl_MTOFormsTemp");
 
-                entity.Property(e => e.InsFormId).HasColumnName("InsFormID");
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
                 entity.Property(e => e.ClientId).HasColumnName("ClientID");
 
@@ -3048,51 +2844,47 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+                entity.Property(e => e.DisciplineId).HasColumnName("DisciplineID");
 
                 entity.Property(e => e.DocumentNumber).HasMaxLength(100);
 
                 entity.Property(e => e.ModifiedBy).HasMaxLength(200);
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
                 entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
 
-                entity.Property(e => e.Title).HasMaxLength(200);
+                entity.Property(e => e.SubDisciplineId).HasColumnName("SubDisciplineID");
 
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtoinstrumentForm)
+                    .WithMany(p => p.TblMtoformsTemp)
                     .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOInstrumentForm_tbl_Clients");
+                    .HasConstraintName("FK_tbl_MTOFormsTemp_tbl_Clients");
 
                 entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtoinstrumentForm)
+                    .WithMany(p => p.TblMtoformsTemp)
                     .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOInstrumentForm_tbl_CompanyInfo");
+                    .HasConstraintName("FK_tbl_MTOFormsTemp_tbl_CompanyInfo");
 
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtoinstrumentForm)
-                    .HasForeignKey(d => d.MtodisciplineId)
+                entity.HasOne(d => d.Discipline)
+                    .WithMany(p => p.TblMtoformsTemp)
+                    .HasForeignKey(d => d.DisciplineId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentForm_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtoinstrumentForm)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentForm_tbl_MTOSubDiscipline");
+                    .HasConstraintName("FK_tbl_MTOFormsTemp_tbl_MTODiscipline");
 
                 entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtoinstrumentForm)
+                    .WithMany(p => p.TblMtoformsTemp)
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentForm_tbl_Projects");
+                    .HasConstraintName("FK_tbl_MTOFormsTemp_tbl_Projects");
+
+                entity.HasOne(d => d.SubDiscipline)
+                    .WithMany(p => p.TblMtoformsTemp)
+                    .HasForeignKey(d => d.SubDisciplineId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_MTOFormsTemp_tbl_MTOSubDiscipline");
             });
 
             modelBuilder.Entity<TblMtoinstrumentFormDetails>(entity =>
@@ -3106,8 +2898,6 @@ namespace JPSAGE_ERP.Domain
                 entity.Property(e => e.CreatedBy).HasMaxLength(200);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.InsFormId).HasColumnName("InsFormID");
 
                 entity.Property(e => e.ItemDescription).HasMaxLength(1000);
 
@@ -3123,15 +2913,11 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
+
                 entity.Property(e => e.Remarks).HasMaxLength(1000);
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
-
-                entity.HasOne(d => d.InsForm)
-                    .WithMany(p => p.TblMtoinstrumentFormDetails)
-                    .HasForeignKey(d => d.InsFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormDetails_tbl_MTOInstrumentForm");
 
                 entity.HasOne(d => d.Manufacturer)
                     .WithMany(p => p.TblMtoinstrumentFormDetails)
@@ -3142,6 +2928,11 @@ namespace JPSAGE_ERP.Domain
                     .WithMany(p => p.TblMtoinstrumentFormDetails)
                     .HasForeignKey(d => d.MaterialId)
                     .HasConstraintName("FK_tbl_MTOInstrumentFormDetails_tbl_Materials");
+
+                entity.HasOne(d => d.Mtoform)
+                    .WithMany(p => p.TblMtoinstrumentFormDetails)
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOInstrumentFormDetails_tbl_MTOForms");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.TblMtoinstrumentFormDetails)
@@ -3161,8 +2952,6 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.InsFormId).HasColumnName("InsFormID");
-
                 entity.Property(e => e.ItemDescription).HasMaxLength(1000);
 
                 entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
@@ -3177,15 +2966,11 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
+
                 entity.Property(e => e.Remarks).HasMaxLength(1000);
 
                 entity.Property(e => e.UnitId).HasColumnName("UnitID");
-
-                entity.HasOne(d => d.InsForm)
-                    .WithMany(p => p.TblMtoinstrumentFormDetailsTemp)
-                    .HasForeignKey(d => d.InsFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormDetailsTemp_tbl_MTOInstrumentFormTemp");
 
                 entity.HasOne(d => d.Manufacturer)
                     .WithMany(p => p.TblMtoinstrumentFormDetailsTemp)
@@ -3197,127 +2982,15 @@ namespace JPSAGE_ERP.Domain
                     .HasForeignKey(d => d.MaterialId)
                     .HasConstraintName("FK_tbl_MTOInstrumentFormDetailsTemp_tbl_Materials");
 
+                entity.HasOne(d => d.Mtoform)
+                    .WithMany(p => p.TblMtoinstrumentFormDetailsTemp)
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOInstrumentFormDetailsTemp_tbl_MTOForms");
+
                 entity.HasOne(d => d.Unit)
                     .WithMany(p => p.TblMtoinstrumentFormDetailsTemp)
                     .HasForeignKey(d => d.UnitId)
                     .HasConstraintName("FK_tbl_MTOInstrumentFormDetailsTemp_tbl_Units");
-            });
-
-            modelBuilder.Entity<TblMtoinstrumentFormTemp>(entity =>
-            {
-                entity.HasKey(e => e.InsFormId);
-
-                entity.ToTable("tbl_MTOInstrumentFormTemp");
-
-                entity.Property(e => e.InsFormId).HasColumnName("InsFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtoinstrumentFormTemp)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormTemp_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtoinstrumentFormTemp)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormTemp_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtoinstrumentFormTemp)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormTemp_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtoinstrumentFormTemp)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOInstrumentFormTemp_tbl_Projects");
-            });
-
-            modelBuilder.Entity<TblMtopipingForm>(entity =>
-            {
-                entity.HasKey(e => e.PipFormId)
-                    .HasName("PK_tbl_MTOPipingForms");
-
-                entity.ToTable("tbl_MTOPipingForm");
-
-                entity.Property(e => e.PipFormId).HasColumnName("PipFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtopipingForm)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOPipingForms_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtopipingForm)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOPipingForms_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtopipingForm)
-                    .HasForeignKey(d => d.MtodisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingForms_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtopipingForm)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingForms_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtopipingForm)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingForms_tbl_Projects");
             });
 
             modelBuilder.Entity<TblMtopipingFormDetails>(entity =>
@@ -3338,9 +3011,9 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PipFormDetId).HasColumnName("PipFormDetID");
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
-                entity.Property(e => e.PipFormId).HasColumnName("PipFormID");
+                entity.Property(e => e.PipFormDetId).HasColumnName("PipFormDetID");
 
                 entity.Property(e => e.Schedule).HasMaxLength(100);
 
@@ -3352,11 +3025,10 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.UnitPrice).HasColumnType("money");
 
-                entity.HasOne(d => d.PipForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany()
-                    .HasForeignKey(d => d.PipFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingFormDetails_tbl_MTOPipingForm");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOPipingFormDetails_tbl_MTOForms");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany()
@@ -3382,9 +3054,9 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.PipFormDetId).HasColumnName("PipFormDetID");
+                entity.Property(e => e.MtoformId).HasColumnName("MTOFormID");
 
-                entity.Property(e => e.PipFormId).HasColumnName("PipFormID");
+                entity.Property(e => e.PipFormDetId).HasColumnName("PipFormDetID");
 
                 entity.Property(e => e.Schedule).HasMaxLength(100);
 
@@ -3396,78 +3068,15 @@ namespace JPSAGE_ERP.Domain
 
                 entity.Property(e => e.UnitPrice).HasColumnType("money");
 
-                entity.HasOne(d => d.PipForm)
+                entity.HasOne(d => d.Mtoform)
                     .WithMany()
-                    .HasForeignKey(d => d.PipFormId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingFormDetailsTemp_tbl_MTOPipingFormTemp");
+                    .HasForeignKey(d => d.MtoformId)
+                    .HasConstraintName("FK_tbl_MTOPipingFormDetailsTemp_tbl_MTOForms");
 
                 entity.HasOne(d => d.Unit)
                     .WithMany()
                     .HasForeignKey(d => d.UnitId)
                     .HasConstraintName("FK_tbl_MTOPipingFormDetailsTemp_tbl_Units");
-            });
-
-            modelBuilder.Entity<TblMtopipingFormTemp>(entity =>
-            {
-                entity.HasKey(e => e.PipFormId)
-                    .HasName("PK_tbl_MTOPipingFormsTemp");
-
-                entity.ToTable("tbl_MTOPipingFormTemp");
-
-                entity.Property(e => e.PipFormId).HasColumnName("PipFormID");
-
-                entity.Property(e => e.ClientId).HasColumnName("ClientID");
-
-                entity.Property(e => e.CompanyId).HasColumnName("CompanyID");
-
-                entity.Property(e => e.CreatedBy).HasMaxLength(200);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber).HasMaxLength(100);
-
-                entity.Property(e => e.ModifiedBy).HasMaxLength(200);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.MtodisciplineId).HasColumnName("MTODisciplineID");
-
-                entity.Property(e => e.MtosubDisciplineId).HasColumnName("MTOSubDisciplineID");
-
-                entity.Property(e => e.ProjectId).HasColumnName("ProjectID");
-
-                entity.Property(e => e.Title).HasMaxLength(200);
-
-                entity.Property(e => e.ValidityPeriod).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.TblMtopipingFormTemp)
-                    .HasForeignKey(d => d.ClientId)
-                    .HasConstraintName("FK_tbl_MTOPipingFormsTemp_tbl_Clients");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.TblMtopipingFormTemp)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_tbl_MTOPipingFormsTemp_tbl_CompanyInfo");
-
-                entity.HasOne(d => d.Mtodiscipline)
-                    .WithMany(p => p.TblMtopipingFormTemp)
-                    .HasForeignKey(d => d.MtodisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingFormsTemp_tbl_MTODiscipline");
-
-                entity.HasOne(d => d.MtosubDiscipline)
-                    .WithMany(p => p.TblMtopipingFormTemp)
-                    .HasForeignKey(d => d.MtosubDisciplineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingFormsTemp_tbl_MTOSubDiscipline");
-
-                entity.HasOne(d => d.Project)
-                    .WithMany(p => p.TblMtopipingFormTemp)
-                    .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tbl_MTOPipingFormsTemp_tbl_Projects");
             });
 
             modelBuilder.Entity<TblMtosubDiscipline>(entity =>

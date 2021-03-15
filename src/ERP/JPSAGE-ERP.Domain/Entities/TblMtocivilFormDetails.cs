@@ -6,7 +6,6 @@ namespace JPSAGE_ERP.Domain.Entities
     public partial class TblMtocivilFormDetails
     {
         public int CivFormDetId { get; set; }
-        public int CivFormId { get; set; }
         public string Description { get; set; }
         public int? Quantity { get; set; }
         public int? UnitId { get; set; }
@@ -18,8 +17,9 @@ namespace JPSAGE_ERP.Domain.Entities
         public string CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
+        public int? MtoformId { get; set; }
 
-        public virtual TblMtocivilForm CivForm { get; set; }
+        public virtual TblMtoforms Mtoform { get; set; }
         public virtual TblUnits Unit { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace JPSAGE_ERP.Application.Interfaces
         Task<IEnumerable<TSrconstructionTechnicalQueriesTempDto>> GetAllSRCTQReplies();
         Task<IEnumerable<TSrconstructionTechnicalQueriesTempDto>> GetAllSRCTQRepliesForAttentee(int attendeeId);
         Task<IEnumerable<TSrconstructionTechnicalQueriesTempDto>> GetAllSRCTQRepliesForInitiator(int attendeeId);
-        Task<IEnumerable<CompanyInfoDto>> GetAllCompanyInfo();
+        Task<IEnumerable<CompanyInfoDto>> GetAllCompanyInfo(string search);
         Task<PagedList<ConstructionTechnicalQueryDto>> GetAllCTQ(int userId, CtqParameters parameters);
         Task<TblSrconstructionTechnicalQueryRepliesTemp> GetCTQByIdDescOrder(int ctqId);
         Task<ConstructionTechnicalQueryRepliesDto> GetCTQByIdIncludeReplies(int ctqId);
